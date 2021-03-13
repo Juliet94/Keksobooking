@@ -15,6 +15,8 @@ const type = document.querySelector('#type');
 const price = document.querySelector('#price');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
+const room = document.querySelector('#room_number');
+const capacity = document.querySelector('#capacity');
 
 /* Неактивное состояние формы */
 
@@ -56,10 +58,39 @@ const onSelectCheckInOut = (evt) => {
   timeOut.value = evt.target.value;
 }
 
-const formValidation = () => {
+const onSelectRoom = () => {
+  if (room.value === '1') {
+    capacity.options[0].disabled = true;
+    capacity.options[1].disabled = true;
+    capacity.options[2].disabled = false;
+    capacity.options[3].disabled = true;
+    capacity.options[2].selected = true;
+  } else if (room.value === '2') {
+    capacity.options[0].disabled = true;
+    capacity.options[1].disabled = false;
+    capacity.options[2].disabled = false;
+    capacity.options[3].disabled = true;
+    capacity.options[1].selected = true;
+  } else if (room.value === '3') {
+    capacity.options[0].disabled = false;
+    capacity.options[1].disabled = false;
+    capacity.options[2].disabled = false;
+    capacity.options[3].disabled = true;
+    capacity.options[0].selected = true;
+  } else if (room.value === '100') {
+    capacity.options[0].disabled = true;
+    capacity.options[1].disabled = true;
+    capacity.options[2].disabled = true;
+    capacity.options[3].disabled = false;
+    capacity.options[3].selected = true;
+  }
+}
+
+const validateForm = () => {
   type.addEventListener('change', onSelectType);
   timeIn.addEventListener('change', onSelectCheckInOut);
   timeOut.addEventListener('change', onSelectCheckInOut);
+  room.addEventListener('change', onSelectRoom)
 }
 
 /* Отправка и сброс формы */
@@ -88,4 +119,4 @@ resetButton.addEventListener('click', (evt) => {
   resetForm()
 })
 
-export {activateForm, formValidation};
+export {activateForm, validateForm};

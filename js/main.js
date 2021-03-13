@@ -1,5 +1,5 @@
 import './card-advert.js';
 import './map.js';
-import {formValidation} from './form.js';
+import {validateForm} from './form.js';
 
-formValidation();
+validateForm();
