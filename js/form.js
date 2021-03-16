@@ -59,31 +59,22 @@ const onSelectCheckInOut = (evt) => {
 }
 
 const onSelectRoom = () => {
-  if (room.value === '1') {
-    capacity.options[0].disabled = true;
-    capacity.options[1].disabled = true;
-    capacity.options[2].disabled = false;
-    capacity.options[3].disabled = true;
-    capacity.options[2].selected = true;
-  } else if (room.value === '2') {
-    capacity.options[0].disabled = true;
-    capacity.options[1].disabled = false;
-    capacity.options[2].disabled = false;
-    capacity.options[3].disabled = true;
-    capacity.options[1].selected = true;
-  } else if (room.value === '3') {
-    capacity.options[0].disabled = false;
-    capacity.options[1].disabled = false;
-    capacity.options[2].disabled = false;
-    capacity.options[3].disabled = true;
-    capacity.options[0].selected = true;
-  } else if (room.value === '100') {
-    capacity.options[0].disabled = true;
-    capacity.options[1].disabled = true;
-    capacity.options[2].disabled = true;
-    capacity.options[3].disabled = false;
-    capacity.options[3].selected = true;
+  if (room.value < capacity.value) {
+    room.setCustomValidity('');
+    capacity.setCustomValidity('Гостей не должно быть больше, чем комнат');
+  } else if ((room.value == 100 && capacity.value != 0) || (room.value != 100 && capacity.value == 0)) {
+    room.setCustomValidity('Значению "100 комнат" должно соответствовать "Не для гостей"');
+    capacity.setCustomValidity('Значению "100 комнат" должно соответствовать "Не для гостей"');
+  } else if (room.value === capacity.value || ((room.value == 100) && capacity.value == 0)) {
+    room.setCustomValidity('');
+    capacity.setCustomValidity('');
+  } else {
+    room.setCustomValidity('');
+    capacity.setCustomValidity('');
   }
+
+  room.reportValidity();
+  capacity.reportValidity();
 }
 
 const validateForm = () => {
@@ -91,6 +82,7 @@ const validateForm = () => {
   timeIn.addEventListener('change', onSelectCheckInOut);
   timeOut.addEventListener('change', onSelectCheckInOut);
   room.addEventListener('change', onSelectRoom)
+  capacity.addEventListener('change', onSelectRoom)
 }
 
 /* Отправка и сброс формы */
