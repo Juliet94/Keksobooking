@@ -15,6 +15,8 @@ const type = document.querySelector('#type');
 const price = document.querySelector('#price');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
+const room = document.querySelector('#room_number');
+const capacity = document.querySelector('#capacity');
 
 /* Неактивное состояние формы */
 
@@ -56,10 +58,31 @@ const onSelectCheckInOut = (evt) => {
   timeOut.value = evt.target.value;
 }
 
-const formValidation = () => {
+const onSelectRoom = () => {
+  if (room.value < capacity.value) {
+    room.setCustomValidity('');
+    capacity.setCustomValidity('Гостей не должно быть больше, чем комнат');
+  } else if ((room.value == 100 && capacity.value != 0) || (room.value != 100 && capacity.value == 0)) {
+    room.setCustomValidity('Значению "100 комнат" должно соответствовать "Не для гостей"');
+    capacity.setCustomValidity('Значению "100 комнат" должно соответствовать "Не для гостей"');
+  } else if (room.value === capacity.value || ((room.value == 100) && capacity.value == 0)) {
+    room.setCustomValidity('');
+    capacity.setCustomValidity('');
+  } else {
+    room.setCustomValidity('');
+    capacity.setCustomValidity('');
+  }
+
+  room.reportValidity();
+  capacity.reportValidity();
+}
+
+const validateForm = () => {
   type.addEventListener('change', onSelectType);
   timeIn.addEventListener('change', onSelectCheckInOut);
   timeOut.addEventListener('change', onSelectCheckInOut);
+  room.addEventListener('change', onSelectRoom)
+  capacity.addEventListener('change', onSelectRoom)
 }
 
 /* Отправка и сброс формы */
@@ -88,4 +111,4 @@ resetButton.addEventListener('click', (evt) => {
   resetForm()
 })
 
-export {activateForm, formValidation};
+export {activateForm, validateForm};
