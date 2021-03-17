@@ -8,8 +8,7 @@ const PRICE_HOUSE = 5000;
 const PRICE_PALACE = 10000;
 
 const form = document.querySelector('.ad-form');
-const fieldsetsSelects = document.querySelectorAll('fieldset, select');
-const filter = document.querySelector('.map__filters');
+const fieldsets = document.querySelectorAll('fieldset');
 const resetButton = document.querySelector('.ad-form__reset');
 const type = document.querySelector('#type');
 const price = document.querySelector('#price');
@@ -21,8 +20,7 @@ const capacity = document.querySelector('#capacity');
 /* Неактивное состояние формы */
 
 form.classList.add('ad-form--disabled');
-filter.classList.add('map__filters--disabled');
-fieldsetsSelects.forEach((value) => {
+fieldsets.forEach((value) => {
   value.setAttribute('disabled', 'disabled')
 });
 
@@ -30,8 +28,7 @@ fieldsetsSelects.forEach((value) => {
 
 const activateForm = () => {
   form.classList.remove('ad-form--disabled');
-  filter.classList.remove('map__filters--disabled')
-  fieldsetsSelects.forEach((value) => {
+  fieldsets.forEach((value) => {
     value.removeAttribute('disabled')
   });
 }
