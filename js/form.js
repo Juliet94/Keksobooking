@@ -56,12 +56,12 @@ const onSelectCheckInOut = (evt) => {
 }
 
 const onSelectRoom = () => {
-  if (room.value < capacity.value) {
-    room.setCustomValidity('');
-    capacity.setCustomValidity('Гостей не должно быть больше, чем комнат');
-  } else if ((room.value == 100 && capacity.value != 0) || (room.value != 100 && capacity.value == 0)) {
+  if ((room.value == 100 && capacity.value != 0) || (room.value != 100 && capacity.value == 0)) {
     room.setCustomValidity('Значению "100 комнат" должно соответствовать "Не для гостей"');
     capacity.setCustomValidity('Значению "100 комнат" должно соответствовать "Не для гостей"');
+  } else if (room.value < capacity.value) {
+    room.setCustomValidity('');
+    capacity.setCustomValidity('Гостей не должно быть больше, чем комнат');
   } else if (room.value === capacity.value || ((room.value == 100) && capacity.value == 0)) {
     room.setCustomValidity('');
     capacity.setCustomValidity('');
@@ -69,9 +69,6 @@ const onSelectRoom = () => {
     room.setCustomValidity('');
     capacity.setCustomValidity('');
   }
-
-  room.reportValidity();
-  capacity.reportValidity();
 }
 
 const validateForm = () => {
