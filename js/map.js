@@ -1,9 +1,7 @@
 /* global L:readonly */
 
-import {getData} from './server.js';
 import {showAdvert} from './card-advert.js';
 import {activateForm} from './form.js';
-import {showErrorMessageGet} from './popup-message.js';
 
 /* Создание карты */
 
@@ -71,6 +69,8 @@ const resetMap = () => {
 
 /* Обычные метки */
 
+const markers = L.layerGroup();
+
 const usualPinIcon = L.icon({
   iconUrl: './img/pin.svg',
   iconSize: [40, 40],
@@ -91,8 +91,9 @@ const renderSimilarAdverts = (adverts) => {
       },
     )
 
+    markers.addLayer(usualPinMarker)
+
     usualPinMarker
-      .addTo(map)
       .bindPopup(
         showAdvert(advert),
         {
@@ -100,8 +101,12 @@ const renderSimilarAdverts = (adverts) => {
         },
       );
   })
+  markers.addTo(map);
 }
 
-getData(renderSimilarAdverts, showErrorMessageGet)
+const clearMarkers = () => {
+  map.closePopup();
+  markers.clearLayers();
+}
 
-export {resetMap};
+export {resetMap, renderSimilarAdverts, clearMarkers};
