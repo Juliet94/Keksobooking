@@ -20,16 +20,16 @@ const capacity = document.querySelector('#capacity');
 /* Неактивное состояние формы */
 
 form.classList.add('ad-form--disabled');
-fieldsets.forEach((value) => {
-  value.setAttribute('disabled', 'disabled')
+fieldsets.forEach((fieldset) => {
+  fieldset.setAttribute('disabled', 'disabled')
 });
 
 /* Активное состояние формы */
 
 const activateForm = () => {
   form.classList.remove('ad-form--disabled');
-  fieldsets.forEach((value) => {
-    value.removeAttribute('disabled')
+  fieldsets.forEach((fieldset) => {
+    fieldset.removeAttribute('disabled')
   });
 }
 
