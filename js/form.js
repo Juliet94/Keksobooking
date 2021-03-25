@@ -1,21 +1,30 @@
 import {showErrorMessageSend, showSuccessMessageSend} from './popup-message.js';
 import {sendData} from './server.js';
 import {resetMap} from './map.js';
+import {showPreview} from './preview.js';
 
-const PRICE_BUNGALOW = 0;
-const PRICE_FLAT = 1000;
-const PRICE_HOUSE = 5000;
-const PRICE_PALACE = 10000;
+const DEFAULT_IMG = 'img/muffin-grey.svg'
+const TypePrice = {
+  BUNGALOW: 0,
+  FLAT: 1000,
+  HOUSE: 5000,
+  PALACE: 10000,
+}
 
 const form = document.querySelector('.ad-form');
-const fieldsets = document.querySelectorAll('fieldset');
-const resetButton = document.querySelector('.ad-form__reset');
-const type = document.querySelector('#type');
-const price = document.querySelector('#price');
-const timeIn = document.querySelector('#timein');
-const timeOut = document.querySelector('#timeout');
-const room = document.querySelector('#room_number');
-const capacity = document.querySelector('#capacity');
+const fieldsets = form.querySelectorAll('fieldset');
+const resetButton = form.querySelector('.ad-form__reset');
+const type = form.querySelector('#type');
+const price = form.querySelector('#price');
+const timeIn = form.querySelector('#timein');
+const timeOut = form.querySelector('#timeout');
+const room = form.querySelector('#room_number');
+const capacity = form.querySelector('#capacity');
+
+const avatarInput  = form.querySelector('#avatar');
+const photoInput = form.querySelector('#images');
+const avatarPreview = form.querySelector('.ad-form-header__preview img')
+const photoPreview = form.querySelector('.ad-form__photo img');
 
 /* Неактивное состояние формы */
 
@@ -40,13 +49,13 @@ const onSelectType = () => {
 
   switch (type.value) {
     case 'flat':
-      return [price.placeholder = PRICE_FLAT] [price.min = PRICE_FLAT];
+      return [price.placeholder = TypePrice.FLAT] [price.min = TypePrice.FLAT];
     case 'bungalow':
-      return [price.placeholder = PRICE_BUNGALOW] [price.min = PRICE_BUNGALOW];
+      return [price.placeholder = TypePrice.BUNGALOW] [price.min = TypePrice.BUNGALOW];
     case 'house':
-      return [price.placeholder = PRICE_HOUSE] [price.min = PRICE_HOUSE];
+      return [price.placeholder = TypePrice.HOUSE] [price.min = TypePrice.HOUSE];
     case 'palace':
-      return [price.placeholder = PRICE_PALACE] [price.min = PRICE_PALACE];
+      return [price.placeholder = TypePrice.PALACE] [price.min = TypePrice.PALACE];
   }
 }
 
@@ -75,15 +84,24 @@ const validateForm = () => {
   type.addEventListener('change', onSelectType);
   timeIn.addEventListener('change', onSelectCheckInOut);
   timeOut.addEventListener('change', onSelectCheckInOut);
-  room.addEventListener('change', onSelectRoom)
-  capacity.addEventListener('change', onSelectRoom)
+  room.addEventListener('change', onSelectRoom);
+  capacity.addEventListener('change', onSelectRoom);
 }
 
+showPreview(avatarInput, avatarPreview);
+showPreview(photoInput, photoPreview);
+
 /* Отправка и сброс формы */
+
+const resetImg = () => {
+  avatarPreview.src = DEFAULT_IMG;
+  photoPreview.src = DEFAULT_IMG;
+}
 
 const resetForm = () => {
   form.reset();
   resetMap();
+  resetImg();
 }
 
 const handleSuccess = () => {
@@ -97,6 +115,7 @@ form.addEventListener('submit', (evt) => {
   const formData = new FormData(evt.target);
 
   sendData(handleSuccess, showErrorMessageSend, formData);
+  resetImg();
 });
 
 resetButton.addEventListener('click', (evt) => {
