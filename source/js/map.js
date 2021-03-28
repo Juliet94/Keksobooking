@@ -5,6 +5,8 @@ import {activateForm} from './form.js';
 
 /* Создание карты */
 
+const MAIN_ICON_SIZE = 52;
+const USUAL_ICON_SIZE = 40;
 const centerTokyo =
   {
     lat: 35.65951,
@@ -29,8 +31,8 @@ L.tileLayer(
 
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [MAIN_ICON_SIZE, MAIN_ICON_SIZE],
+  iconAnchor: [MAIN_ICON_SIZE / 2, MAIN_ICON_SIZE],
 });
 
 const mainPinMarker = L.marker(
@@ -73,8 +75,8 @@ const markers = L.layerGroup();
 
 const usualPinIcon = L.icon({
   iconUrl: './img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [USUAL_ICON_SIZE, USUAL_ICON_SIZE],
+  iconAnchor: [USUAL_ICON_SIZE / 2, USUAL_ICON_SIZE],
 })
 
 const renderSimilarAdverts = (adverts) => {

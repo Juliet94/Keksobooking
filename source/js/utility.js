@@ -4,20 +4,24 @@ const isEscEvent = (evt) => {
   return evt.key === 'Escape' || evt.key === 'Esc';
 };
 
-const closeOnEsc = (popup) => {
-  document.addEventListener('keydown', (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      popup.remove();
-    }
-  })
+const closeOnEsc = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    evt.target.remove();
+    evt.target.removeEventListener('keydown', closeOnEsc)
+  }
 }
 
-const closeOnClick = (popup, button) => {
-  button.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    popup.remove();
-  })
+const closeOnClick = (evt) => {
+  evt.preventDefault();
+  evt.target.remove();
+  evt.target.removeEventListener('click', closeOnClick)
+}
+
+const closeOnClickButton = (evt) => {
+  evt.preventDefault();
+  evt.target.closest('div').remove();
+  evt.target.removeEventListener('click', closeOnClickButton)
 }
 
 /* Функция debounce из библиотеки lodash */
@@ -25,13 +29,14 @@ const closeOnClick = (popup, button) => {
 const debounce = (func, wait, immediate) => {
   let timeout;
 
-  return function executedFunction() {
+  return (...args) => {
     const context = this;
-    const args = arguments;
 
-    const later = function() {
+    const later = () => {
       timeout = null;
-      if (!immediate) func.apply(context, args);
+      if (!immediate) {
+        func.apply(context, args);
+      }
     };
 
     const callNow = immediate && !timeout;
@@ -40,12 +45,15 @@ const debounce = (func, wait, immediate) => {
 
     timeout = setTimeout(later, wait);
 
-    if (callNow) func.apply(context, args);
+    if (callNow) {
+      func.apply(context, args);
+    }
   };
 }
 
 export {
   closeOnEsc,
   closeOnClick,
+  closeOnClickButton,
   debounce
 };

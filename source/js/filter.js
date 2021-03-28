@@ -90,6 +90,9 @@ const onDataSuccess = (adverts) => {
   filter.addEventListener('change', () => {
     onChangeFilter(adverts)
   })
+  filter.addEventListener('reset', () => {
+    onChangeFilter(adverts)
+  })
 }
 
 export {onDataSuccess};

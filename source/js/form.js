@@ -12,6 +12,7 @@ const TypePrice = {
 }
 
 const form = document.querySelector('.ad-form');
+const filter = document.querySelector('.map__filters');
 const fieldsets = form.querySelectorAll('fieldset');
 const resetButton = form.querySelector('.ad-form__reset');
 const type = form.querySelector('#type');
@@ -65,13 +66,13 @@ const onSelectCheckInOut = (evt) => {
 }
 
 const onSelectRoom = () => {
-  if ((room.value == 100 && capacity.value != 0) || (room.value != 100 && capacity.value == 0)) {
+  if ((room.value === '100' && capacity.value !== '0') || (room.value !== '100' && capacity.value === '0')) {
     room.setCustomValidity('Значению "100 комнат" должно соответствовать "Не для гостей"');
     capacity.setCustomValidity('Значению "100 комнат" должно соответствовать "Не для гостей"');
   } else if (room.value < capacity.value) {
     room.setCustomValidity('');
     capacity.setCustomValidity('Гостей не должно быть больше, чем комнат');
-  } else if (room.value === capacity.value || ((room.value == 100) && capacity.value == 0)) {
+  } else if (room.value === capacity.value || ((room.value === '100') && capacity.value === '0')) {
     room.setCustomValidity('');
     capacity.setCustomValidity('');
   } else {
@@ -100,6 +101,7 @@ const resetImg = () => {
 
 const resetForm = () => {
   form.reset();
+  filter.reset();
   resetMap();
   resetImg();
 }
