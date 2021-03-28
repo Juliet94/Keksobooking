@@ -3,13 +3,13 @@ import {closeOnEsc, closeOnClick, closeOnClickButton} from './utility.js';
 /* Обработчики событий */
 
 const onShowError = () => {
-  errorMessage.addEventListener('keydown',closeOnEsc);
+  document.addEventListener('keydown',closeOnEsc);
   errorMessage.addEventListener('click',closeOnClick);
   closeErrorButton.addEventListener('click', closeOnClickButton);
 }
 
 const onShowSuccess = () => {
-  successMessage.addEventListener('keydown',closeOnEsc);
+  document.addEventListener('keydown',closeOnEsc);
   successMessage.addEventListener('click',closeOnClick);
 }
 

@@ -7,7 +7,7 @@ const isEscEvent = (evt) => {
 const closeOnEsc = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    evt.target.remove();
+    document.body.removeChild(document.body.lastChild);
     evt.target.removeEventListener('keydown', closeOnEsc)
   }
 }
