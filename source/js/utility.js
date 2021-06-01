@@ -24,8 +24,6 @@ const closeOnClickButton = (evt) => {
   evt.target.removeEventListener('click', closeOnClickButton)
 }
 
-/* Функция debounce из библиотеки lodash */
-
 const debounce = (func, wait, immediate) => {
   let timeout;
 
