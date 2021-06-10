@@ -13,7 +13,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     # запускаются по шагам
     # name - название шага
     # в github actions будет выводиться название шага, и процессы
@@ -39,5 +39,5 @@ jobs:
           # в данном случае его название KEY
           GITHUB_TOKEN: ${{ secrets.KEKS_DEPLOY }}
           BRANCH: gh-pages
-          FOLDER: public
+          FOLDER: build
           CLEAN: true
